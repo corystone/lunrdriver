@@ -44,7 +44,13 @@ class LunrDriver(VolumeDriver):
         model_update = {}
         model_update_meta = {}
         affinity = None
-        for meta in volume.get('volume_metadata', []):
+
+
+        try:
+            metadata = volume.volume_metadata
+        except AttributeError:
+            metadata = volume.get('volume_metadata', [])
+        for meta in metadata:
             model_update_meta[meta.key] = meta.value
             # Translating terms, rack->group. Last one specified wins.
             if meta.key == 'different_node':
