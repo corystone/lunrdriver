@@ -117,6 +117,8 @@ class LunrDriver(VolumeDriver):
             model_update['host'] = resp.body['cinder_host']
         if resp.body.get('node_id'):
             model_update_meta['storage-node'] = resp.body['node_id']
+        if resp.body.get('zone'):
+            model_update_meta['maintenance_zone'] = resp.body['zone']
 
         # return any model changes that cinder should make
         if model_update_meta:
